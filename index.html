@@ -49,7 +49,8 @@
                 <h2 class="major">Intro</h2>
                 <span class="image main"><img src="images/pic01.jpg" alt="" /></span>
                 <p>Hi there! I am a Junior Computer Science student at Suffolk University in Boston. I am mainly interested in programming in the worlds of finance and data science, but also in areas like gaming and social media. </p>
-		<p>I'm most proficient in Java and Python, followed by C++, C, and C# (in order of proficiency), as well as some experience in scripting with Lua, and some dabbling in NASM x86. With Python, I've worked with pandas, NumPy, scikit-learn, and Keras for data science projects.</p>
+                <p>I'm most proficient in Java and Python, followed by C++, C, and C# (in order of proficiency), as well as some experience in scripting with Lua, and some dabbling in NASM x86. With Python, I've worked with pandas, NumPy, scikit-learn, and
+                    Keras for data science projects.</p>
                 <p>Please feel free to check out some of my <a href="#work">work!</a>.</p>
             </article>
 
@@ -60,7 +61,33 @@
                 <h3 class="major">Discord Voice Activated Bot</h3>
                 <p>A Discord bot coded mainly in Node.js which can join voice chat in a server, capture audio streams from individual users, and transcribe audio clips to search for command phrases.</p>
                 <h3 class="major">Stock Market Prediction</h3>
-                <p>A Python program which uses a neural network to predict the price of a stock based on historical data. The program uses the Keras library to create a neural network, and the Yahoo Finance API to get historical stock data.</p>
+                <p>A Python program which uses simple machine learning to predict the price of a stock based on how it moves relative to the S&P500. Try it by entering a stock ticker!</p>
+                <script>
+                    async function getConfusionMatrix() {
+                        const stock = document.getElementById("stock").value;
+                        const response = await fetch('https://25j2zixzga.execute-api.us-east-2.amazonaws.com/default/stock_prediction', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                stock: stock
+                            }),
+                        });
+                        const matrix = await response.json();
+
+                        // Format the confusion matrix as an HTML table
+                        let table = '<table><thead><tr><th></th><th>Predicted Up</th><th>Predicted Down</th></tr></thead><tbody>';
+                        table += '<tr><td>Actual Up</td><td>' + matrix.Up.Up + '</td><td>' + matrix.Up.Down + '</td></tr>';
+                        table += '<tr><td>Actual Down</td><td>' + matrix.Down.Up + '</td><td>' + matrix.Down.Down + '</td></tr>';
+                        table += '</tbody></table>';
+
+                        // Display the confusion matrix on your website
+                        document.getElementById("confusion-matrix-result").innerHTML = table;
+                    }
+                </script>
+                <input type="text" id="stock" placeholder="Enter stock symbol">
+                <button onclick="getConfusionMatrix()">Get Confusion Matrix</button>
             </article>
 
             <!-- Resume -->
