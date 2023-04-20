@@ -65,7 +65,7 @@
                 <script>
                     async function getConfusionMatrix() {
                         const stock = document.getElementById("stock").value;
-                        const response = await fetch('http://flask-env.eba-eupd5djb.us-east-2.elasticbeanstalk.com/api/confusion_matrix', {
+                        const response = await fetch('ec2-18-191-239-228.us-east-2.compute.amazonaws.com:5000/dsapi', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
