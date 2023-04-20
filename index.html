@@ -65,7 +65,7 @@
                 <script>
                     async function getConfusionMatrix() {
                         const stock = document.getElementById("stock").value;
-                        const response = await fetch('ec2-18-191-239-228.us-east-2.compute.amazonaws.com:5000/dsapi', {
+                        const response = await fetch('http://ec2-18-191-239-228.us-east-2.compute.amazonaws.com:5000/dsapi', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
