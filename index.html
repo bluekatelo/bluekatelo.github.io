@@ -134,6 +134,32 @@
 											and data science in general, I've created a Flask API for the Python code 
 											as a backend on AWS.
 										</p>
+										<script>
+											async function getConfusionMatrix() {
+												const stock = document.getElementById("stock").value;
+												const response = await fetch('18.191.239.228:5000/dsapi', {
+													method: 'POST',
+													headers: {
+														'Content-Type': 'application/json'
+													},
+													body: JSON.stringify({
+														stock: stock
+													}),
+												});
+												const matrix = await response.json();
+												// Format the confusion matrix as an HTML table
+												let table = '<table><thead><tr><th></th><th>Predicted Up</th><th>Predicted Down</th></tr></thead><tbody>';
+												table += '<tr><td>Actual Up</td><td>' + matrix.Up.Up + '</td><td>' + matrix.Up.Down + '</td></tr>';
+												table += '<tr><td>Actual Down</td><td>' + matrix.Down.Up + '</td><td>' + matrix.Down.Down + '</td></tr>';
+												table += '</tbody></table>';
+												// Display the confusion matrix on your website
+												document.getElementById("confusion-matrix-result").innerHTML = table;
+											}
+										</script>
+										<div style="position: relative; display: inline-block;">
+											<input type="text" id="stock" placeholder="Enter stock symbol" style="padding-right: 100px;">
+											<button style="position: absolute; top: 0; right: 0; height: 100%; width: 100px;" onclick="getConfusionMatrix()">Get Prediction!</button>
+										</div>
 									</div>
 									<div style="width: 45%; text-align: left;">
 										<h3 style="text-align: center; font-size: x-large;"><a href="https://github.com/bluekatelo/GooberBot">Alexa-like bot for Discord</a></h3>
